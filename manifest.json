@@ -1,8 +1,12 @@
 {
-"manifest_version": 1,
+"manifest_version": 2,
     "name": "project-attila",
     "description": "Extension that evaluates math expressions",
     "version": "1.0",
+    "browser_action": {
+	"default_popup": "popup.html",
+	"default_title": "project-attila"
+    },
     "content_scripts": [
         {
             "matches": [
@@ -13,12 +17,7 @@
             ],
             "run_at": "document_end"
         }
-    ]
-    "browser_action": {
-	"default_icon": "icon.png",
-	"default_popup": "popup.html"
-	"default_title": "project-attila"
-    },
+    ],
     "permissions": [
 	"activeTab",
 	"https://ajax.googleapis.com/"
