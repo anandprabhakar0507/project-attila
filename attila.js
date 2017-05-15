@@ -1,7 +1,7 @@
 var input = document.getElementById("name");
 input.onkeyup = function() {check_for_backticks()};
 function evaluate_expression(match, p1, offset, string){
-    return p1;
+    return eval(p1);
 }
 function check_for_backticks(){
     if (input && input.value) {
