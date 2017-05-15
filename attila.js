@@ -14,12 +14,12 @@ else if(window.location.href.indexOf("messenger.com") > -1){
 var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
 
 while (node = walker.nextNode()) {
-    //node.textContent = substituteBackticks(node.textContent);
+    node.textContent = substituteBackticks(node);
     console.log(node);
 }
 
-function substituteBackticks(text) {
-    return text.replace(/`([^`]*)`/, function(match, p1, offest, string) { return eval(p1); });
+function substituteBackticks(textNode) {
+    return textNode.nodeValue.replace(/`([^`]*)`/, function(match, p1, offset, string) { return eval(p1); });
 }
 
 /*
