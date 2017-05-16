@@ -19,10 +19,9 @@ function handleText(textNode) {
   textNode.nodeValue = replaceText(textNode.nodeValue);
 }
 
-function replaceText(v)
-{
-    v =  v.replace(/`([^`]*)`/, function(match, p1, offset, string) { return eval(p1); });
-    return v;
+function replaceText(v) {
+    var pattern = /`([^`]*)`/;
+    return v.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
 }
 
 // Marks editable content
@@ -92,5 +91,6 @@ function handleTextNode(textNode) {
 }
 
 function substituteBackticks(text) {
-    return text.replace(/`([^`]*)`/, function(match, p1, offset, string) { return eval(p1); });
+    var pattern = /`([()+*\/0-9\s]+)`/;
+    return text.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
 }
