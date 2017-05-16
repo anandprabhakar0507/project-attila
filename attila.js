@@ -56,8 +56,7 @@ function observerCallback(mutations) {
 
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
-    var docTitle = doc.getElementsByTagName('title')[0],
-    observerConfig = {
+    var observerConfig = {
         characterData: true,
         childList: true,
         subtree: true
@@ -66,31 +65,10 @@ function walkAndObserve(doc) {
 
     // Do the initial text replacements in the document body and title
     walk(doc.body);
-    doc.title = replaceText(doc.title);
 
     // Observe the body so that we replace text in any added/modified nodes
     bodyObserver = new MutationObserver(observerCallback);
     bodyObserver.observe(doc.body, observerConfig);
 
-    // Observe the title so we can handle any modifications there
-    if (docTitle) {
-        titleObserver = new MutationObserver(observerCallback);
-        titleObserver.observe(docTitle, observerConfig);
-    }
 }
 walkAndObserve(document);
-var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-
-while (node = walker.nextNode()) {
-    handleTextNode(node);
-    //console.log(node);
-}
-
-function handleTextNode(textNode) {
-    textNode.nodeValue = substituteBackticks(textNode.nodeValue);
-}
-
-function substituteBackticks(text) {
-    var pattern = /`([()+*\/0-9\s]+)`/;
-    return text.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
-}
