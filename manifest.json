@@ -1,7 +1,9 @@
 {
 "manifest_version": 2,
     "name": "project-attila",
+    "short_name": "attila", 
     "description": "Extension that evaluates math expressions",
+    "author": "Noah Kim, Ian Fisher",
     "version": "1.0",
     "browser_action": {
 	"default_popup": "popup.html",
@@ -13,8 +15,9 @@
                 "*://*/*",
 		"file:///*/*"
             ],
+	    "all_frames": true,
             "js": [
-                "testAttila.js"
+                "attila.js"
             ],
             "run_at": "document_end"
         }
