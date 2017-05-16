@@ -14,7 +14,7 @@
 		"file:///*/*"
             ],
             "js": [
-                "attila.js"
+                "testAttila.js"
             ],
             "run_at": "document_end"
         }
