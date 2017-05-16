@@ -10,7 +10,8 @@
     "content_scripts": [
         {
             "matches": [
-                "*://*/*"
+                "*://*/*",
+		"file:///*/*"
             ],
             "js": [
                 "attila.js"
