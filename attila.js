@@ -20,7 +20,7 @@ function handleText(textNode) {
 }
 
 function replaceText(v) {
-    var pattern = /`([^`]*)`/;
+    var pattern = /`([()+*/0-9\s-]+)`/;
     return v.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
 }
 
