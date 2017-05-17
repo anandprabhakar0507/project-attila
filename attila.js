@@ -1,5 +1,7 @@
-function walk(rootNode)
+function walk()
 {
+    rootNode = document.body;
+    console.log("walk");
     // Find all the text nodes in rootNode
     var walker = document.createTreeWalker(
         rootNode,
@@ -11,7 +13,9 @@ function walk(rootNode)
 
     // Modify each text node's value
     while (node = walker.nextNode()) {
-        handleText(node);
+	if(isEditableNode(node)){
+	    handleText(node);
+	}
     }
 }
 
@@ -21,7 +25,11 @@ function handleText(textNode) {
 
 function replaceText(v) {
     var pattern = /`([()+*/0-9\s-]+)`/;
-    return v.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
+    console.log(v);
+    if(v.search(pattern) >-1){
+        v = v.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
+    }
+    return v;
 }
 
 // Marks editable content
@@ -32,28 +40,6 @@ function isEditableNode(node) {
                      node.tagName.toLowerCase() == "input"));
 }
 
-// The callback used for the document body and title observers
-function observerCallback(mutations) {
-    var i, node;
-
-    mutations.forEach(function(mutation) {
-        for (i = 0; i < mutation.addedNodes.length; i++) {
-            node = mutation.addedNodes[i];
-            if (isEditableNode(node)) {
-                // What to do when there is editable content?
-		handleText(node);
-                
-            } else if (node.nodeType === 3) {
-                // Replace the text for text nodes
-                handleText(node);
-            } else {
-                // Otherwise, find text nodes within the given node and replace text
-                walk(node);
-            }
-        }
-    });
-}
-
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
     var observerConfig = {
@@ -61,14 +47,21 @@ function walkAndObserve(doc) {
         childList: true,
         subtree: true
     },
-    bodyObserver, titleObserver;
+	bodyObserver;
 
-    // Do the initial text replacements in the document body and title
-    walk(doc.body);
-
+    // Do the initial text replacements in the document body
+    walk();
+    
     // Observe the body so that we replace text in any added/modified nodes
-    bodyObserver = new MutationObserver(observerCallback);
-    bodyObserver.observe(doc.body, observerConfig);
+   
+   // bodyObserver = new MutationObserver(observerCallback);
+    //bodyObserver.observe(doc.body, observerConfig);
 
 }
+
+// We want keyup instead of keydown but I can't figure out how to make it work
+document.addEventListener("keydown", walk);
 walkAndObserve(document);
+function test(){
+    console.log("Test function");
+}
