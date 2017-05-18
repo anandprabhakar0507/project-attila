@@ -1,20 +1,21 @@
-document.onkeyup = function() {
-    if (document.activeElement.tagName != "BODY") {
-	handleText(document.activeElement);
+var inBackticks = false;
+$(document.activeElement).on("keyup", function(event) {
+    if (event.which === 192) {
+        if (inBackticks) {
+            var active = $(document.activeElement);
+            if (active.prop("tagName") === "INPUT") {
+                active.val(replaceText(active.val()));
+            } else if (active.prop("tagName") !== "BODY") {
+                active.text(replaceText(active.text()));
+            }
+            inBackticks = false;
+        } else {
+            inBackticks = true;
+        }
     }
-}
+});
 
-function handleText(textNode) {
-    console.log(Object.prototype.toString.call(textNode));
-    var children = textNode.getElementsByTagName("*");
-    for (var i = 0; i < children.length; i++) {
-        console.log(Object.prototype.toString.call(children[i]));
-    }
-    textNode.value = replaceText(textNode.value);
-}
-
+var pattern = /`([()*+/0-9\s-]+)`$/;
 function replaceText(v) {
-    console.log(Object.prototype.toString.call(v));
-    var pattern = /`([()+*/0-9\s-]+)`/;
     return v.replace(pattern, function(match, p1, offset, string) { return eval(p1); });
 }
