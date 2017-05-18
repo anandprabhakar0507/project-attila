@@ -1,3 +1,4 @@
+var editableNodes = [];
 function walk()
 {
     rootNode = document.body;
@@ -14,11 +15,22 @@ function walk()
     // Modify each text node's value
     while (node = walker.nextNode()) {
 	if(isEditableNode(node)){
+	    editableNodes.push(node);
 	    handleText(node);
 	}
     }
 }
+function walk2()
+{
+    console.log("walk2");
+    size = editableNodes.length;
+    for(i=0; i<size; i++){
+	handleText(editableNodes[i]);
+    }
 
+
+
+}
 function handleText(textNode) {
   textNode.nodeValue = replaceText(textNode.nodeValue);
 }
@@ -60,8 +72,8 @@ function walkAndObserve(doc) {
 }
 
 // We want keyup instead of keydown but I can't figure out how to make it work
-document.addEventListener("keydown", walk);
-walkAndObserve(document);
+document.onkeyup =  walk2;
+walk();
 function test(){
     console.log("Test function");
 }
