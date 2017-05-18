@@ -1,13 +1,14 @@
 document.onkeyup = function() {
     if (document.activeElement.tagName != "BODY") {
-        handleText(document.activeElement);
+	console.log(document.activeElement.textContent);
+	handleText(document.activeElement);
     }
 }
 
 function handleText(textNode) {
-    console.log(textNode);
-    if (textNode.nodeValue) {
-        textNode.nodeValue = replaceText(textNode.nodeValue);
+    //console.log(textNode);
+    if (textNode.textContent) {
+        //textNode.textContent = replaceText(textNode.textContent);
     }
 }
 
