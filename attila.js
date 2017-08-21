@@ -48,7 +48,7 @@ function equationExists(){
 function showCalcDiv(){
   expression = expression.substring(1, expression.length-1);
   expressionDiv.innerHTML = expression;
-  answerDiv.innerHTML = "=" + eval(String(expression));
+  answerDiv.innerHTML = "= " + eval(String(expression));
   console.log()
   calcDiv.style.display = 'block';
 }
